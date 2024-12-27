@@ -1,6 +1,16 @@
 import { User } from "../models/user.js";
 
-// READ
+// Get all users
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password"); // Exclude password field for security
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// READ a particular user
 export const getUser = async (req, res) => {
   try {
     const { id } = req.params;

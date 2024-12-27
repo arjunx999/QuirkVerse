@@ -12,11 +12,21 @@ export const register = async (req, res) => {
             email,
             password,
             picturePath,
-            followers,
-            following,
+            // followers,
+            // following,
         } = req.body
 
-        const salt = await bcrypt.genSalt()
+        // Check if the username is already taken
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+        return res.status(400).json({ msg: "Username is already taken" });
+        }
+        // Check if a user already exists with the same email
+        const existingMail = await User.findOne({ email });
+        if (existingMail) {
+        return res.status(409).json({ msg: "Email ID is already taken" });
+        }
+        const salt = await bcrypt.genSalt() // random data for encryption
         const passwordHash = await bcrypt.hash(password, salt)
 
         // creating a new user in the database
@@ -26,13 +36,22 @@ export const register = async (req, res) => {
             email,
             password: passwordHash,
             picturePath,
-            followers,
-            following,
+            // followers,
+            // following,
         })
         const savedUser = await newUser.save();
-        res.status(201).json(savedUser)
+        // res.status(201).json(savedUser)
+        res.status(201).json({
+            success: true,
+            message: "User successfully created",
+            user: savedUser
+          });          
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: error.message,
+        })
     }
 }
 

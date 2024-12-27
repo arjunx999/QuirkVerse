@@ -34,14 +34,16 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
-  following: {
-    type: Array,
-    default: [],
-  },
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   createdAt: {
     type: Date,
     default: Date.now,
     immutable: true,
+  },
+  likedPosts: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Post",
+    default: [],
   },
 });
 

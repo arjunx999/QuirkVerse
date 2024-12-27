@@ -1,8 +1,11 @@
 import express from "express";
 import { verifyToken } from "../middleware/auth.js";
-import { getUser, getUserFollowers, addRemoveFollower } from "../controllers/users.js";
+import { getUser, getUserFollowers, addRemoveFollower, getAllUsers } from "../controllers/users.js";
 
 const router = express.Router();
+
+// Get all users
+router.get("/", getAllUsers);
 
 // Get user details by ID
 router.get("/:id", getUser);
