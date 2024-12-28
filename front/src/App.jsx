@@ -14,18 +14,13 @@ import { useState, useEffect } from "react";
 const App = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   useEffect(() => {
-    // Track the mouse position
     const handleMouseMove = (e) => {
       setCursorPosition({
         x: e.clientX,
         y: e.clientY,
       });
     };
-
-    // Add mouse move event listener
     window.addEventListener("mousemove", handleMouseMove);
-
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };

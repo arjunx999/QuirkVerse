@@ -61,7 +61,7 @@ export const login = async (req, res) => {
         const { email, password } = req.body;   
         const user = await User.findOne({ email: email })
         if(!user) {
-            return res.status(400).json({ msg: "user does not exist" })
+            return res.status(404).json({ msg: "user does not exist" })
         }
         
         const isMatch = await bcrypt.compare(password, user.password)
@@ -70,9 +70,20 @@ export const login = async (req, res) => {
         }
         
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-        delete user.password;
-        res.status(200).json({ token, user })
+        // delete user.password;
+        // res.status(200).json({ token, user })
+        const { password: _, ...userWithoutPassword } = user.toObject();
+        res.status(200).json({ 
+            success: true,
+            message: "Login successful",
+            token, 
+            user: userWithoutPassword 
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ 
+            success: false,
+            message: "Internal server error",
+            error: error.message 
+        });
     }
 }
