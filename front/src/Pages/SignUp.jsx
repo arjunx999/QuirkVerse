@@ -22,7 +22,7 @@ const SignUp = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
+    // console.log(name, value);
     setSignUpInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
@@ -56,7 +56,7 @@ const SignUp = () => {
         alert("Sign-up Successful! Login to continue");
         setTimeout(() => {
           Navigate("/login");
-        }, 1000);
+        }, 450);
       } else {
         alert(message || "Sign-up failed. Please try again.");
       }

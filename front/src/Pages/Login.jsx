@@ -5,12 +5,15 @@ import logo from "../assets/quirkverse.svg";
 import AuthButton from "../Components/AuthButton";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAppContext } from "../Contexts/UserContext";
 
 const Login = () => {
   const Navigate = useNavigate()
   const SignupRedirect = () => {
     Navigate('/signup')
   }
+
+  const { setUser } = useAppContext();
 
   const [loginInfo, setLoginInfo] = useState({
     email: "",
@@ -19,7 +22,7 @@ const Login = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
+    // console.log(name, value);
     setLoginInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
@@ -53,9 +56,12 @@ const Login = () => {
         alert(message);
         // console.log("User Data:", user);
         // console.log("JWT Token:", token);
+        // console.log("result user", result.user)
+        setUser(user)
+        // setUser(result.user)
         setTimeout(() => {
           Navigate("/home/for-you");
-        }, 1000);
+        }, 450);
       } else {
         alert(message || "Login failed. Please try again");
       }
