@@ -54,6 +54,7 @@ const Login = () => {
       const { success, message, token, user } = result;
       if (success) {
         alert(message);
+        sessionStorage.setItem("token", token)
         // console.log("User Data:", user);
         // console.log("JWT Token:", token);
         // console.log("result user", result.user)

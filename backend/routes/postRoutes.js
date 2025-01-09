@@ -1,11 +1,12 @@
 import express from "express";
 import { verifyToken } from "../middleware/auth.js";
-import { createPost, getPosts, getPostById, likePost, deletePost, getLikedPosts, getPostsFromFollowedUsers } from "../controllers/posts.js";
+import { createPost, getPosts, getPostById, likePost, deletePost, getLikedPosts, getPostsFromFollowedUsers, savePost, getSavedPosts } from "../controllers/posts.js";
 
 const router = express.Router();
 
 // Create a post (authenticated)
-router.post("/", verifyToken, createPost);
+// router.post("/", verifyToken, createPost);
+router.post("/create", verifyToken, createPost);
 
 // Get all posts
 router.get("/", getPosts);
@@ -20,8 +21,14 @@ router.get("/users/:userId/liked-posts", getLikedPosts);
 router.get("/users/:userId/following-posts", verifyToken, getPostsFromFollowedUsers);
 
 // Like a post (authenticated)
-router.patch("/posts/:postId/like", verifyToken, likePost);
+router.patch("/:postId/like", verifyToken, likePost);
 // router.patch("/posts/:postId/like/:userId", likePost);
+
+// Like a save (authenticated)
+router.patch("/:postId/save", verifyToken, savePost);
+
+// getting saved posts
+router.get("/users/:userId/saved-posts", verifyToken, getSavedPosts);
 
 // Delete a post (authenticated)
 router.delete("/:id", verifyToken, deletePost);

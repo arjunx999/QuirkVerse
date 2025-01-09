@@ -29,6 +29,7 @@ const postSchema = mongoose.Schema({
     immutable: true,
   },
   likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  savedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
 export const Post = mongoose.model("Post", postSchema);

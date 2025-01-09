@@ -53,7 +53,9 @@ export const getLikedPosts = async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: "User not found." });
       }
-  
+    //   console.log(user)
+    //   console.log(user.liked)
+      await user.save()
       res.status(200).json(user.likedPosts);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -73,7 +75,7 @@ export const getPostsFromFollowedUsers = async (req, res) => {
   
       // Fetch posts where the author is in the user's "following" list
       const posts = await Post.find({ author: { $in: user.following } }).populate("author", "username");
-  
+
       res.status(200).json(posts);
     } catch (error) {
       console.error(error);
@@ -81,11 +83,12 @@ export const getPostsFromFollowedUsers = async (req, res) => {
     }
 };
   
-// update likes on a post 
+// update likes on a post AND IN THE USER'S DATABASE AS WELL
 export const likePost = async (req, res) => {
     try {
         const { postId } = req.params; 
-        const userId = req.user.id;
+        // const userId = req.user.id;
+        const { userId } = req.body;
 
         const post = await Post.findById(postId);
         if (!post) {
@@ -95,19 +98,72 @@ export const likePost = async (req, res) => {
         const alreadyLiked = post.likedBy.includes(userId);
 
         if (alreadyLiked) {
-            post.likes -= 1;
+            post.likes -=1;
             post.likedBy = post.likedBy.filter((id) => id.toString() !== userId);
         } else {
-            post.likes += 1;
+            post.likes +=1;
             post.likedBy.push(userId);
         }
-
         const updatedPost = await post.save();
+
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        const postIndex = user.likedPosts.indexOf(postId);
+
+        if (postIndex === -1) {
+        user.likedPosts.push(postId);
+        } else {
+        user.likedPosts.splice(postIndex, 1);
+        }
+        await user.save(); 
+
         res.status(200).json(updatedPost);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
+// saving a post
+export const savePost = async (req, res) => {
+    const { postId } = req.params
+    const { userId } = req.body
+    try {
+        const post = await Post.findById(postId)
+        const user = await User.findById(userId)
+        if(!post) {
+            return res.status(404).json({ message: "Post Not Found" })
+        }
+        
+        if (user.savedPosts.includes(postId)) {
+            user.savedPosts = user.savedPosts.filter((id) => id.toString() !== postId);
+          } else {
+            // Save
+            user.savedPosts.push(postId);
+          }   
+          await user.save()
+          const updatedPost = await post.save();
+          res.status(200).json(updatedPost) 
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+// fetching saved posts
+export const getSavedPosts = async (req, res) => {
+    try {
+      const { userId } = req.params;
+  
+      const user = await User.findById(userId).populate("savedPosts");
+      if (!user) {
+        return res.status(404).json({ message: "User not found." });
+      }
+  
+      res.status(200).json(user.savedPosts);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+}
 
 // deleting a post
 export const deletePost = async (req, res) => {

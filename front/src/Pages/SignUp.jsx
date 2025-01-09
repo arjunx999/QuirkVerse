@@ -42,7 +42,7 @@ const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(signUpInfo), //passing user data
+        body: JSON.stringify(updatedSignUpInfo), //passing user data
       });
       if (response.status === 400) {
         return alert("Username Already Taken");
