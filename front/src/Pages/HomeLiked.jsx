@@ -9,6 +9,7 @@ import AuthButton from "../Components/AuthButton";
 const HomeLiked = () => {
   const Navigate = useNavigate();
   const { user, setUser } = useAppContext();
+  const token = sessionStorage.getItem("token");
 
   const HeadToHome = () => {
     Navigate("/");
@@ -28,9 +29,14 @@ const HomeLiked = () => {
     const fetchLikedPosts = async () => {
       try {
         const url = `http://localhost:9999/posts/users/${user._id}/liked-posts`;
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const result = await response.json();
-        // console.log(response)
+        console.log(result)
         setPosts(result);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -98,7 +104,7 @@ const HomeLiked = () => {
         <div className=" absolute bottom-0 right-0 m-[1.5vw] z-[1000] ">
           <div onClick={createPostRoute} ><AuthButton text="Create New Post" /></div>
           
-        </div>
+        </div> onClick={() => Navigate("/home/liked")}
         {/* Navbar */}
         <div className="w-[42%] h-[7.5vh] bg-red-500 mx-auto rounded-3xl my-[2.2vh] glass-navbar2 flex items-center justify-center gap-x-[2vw] font-fredoka font-medium text-zinc-200 absolute 
         top-[0.5vh] z-[100] left-[30%] ">
@@ -107,12 +113,12 @@ const HomeLiked = () => {
             <span className="absolute bottom-[-1.1px] left-0 right-0 mx-auto h-[1.1px] w-full bg-purple-500 scale-x-0 origin-center transition-transform group-hover:scale-x-100"></span>
           </h3>
           <div className="w-[1.3px] h-[40%] bg-zinc-400 rounded-full "></div>
-          <h3 className="cursor-pointer relative group">
+          <h3 className="cursor-pointer relative group" onClick={() => Navigate("/home/following")}>
             Following
             <span className="absolute bottom-[-1.1px] left-0 right-0 mx-auto h-[1.1px] w-full bg-purple-500 scale-x-0 origin-center transition-transform group-hover:scale-x-100"></span>
           </h3>
           <div className="w-[1.3px] h-[40%] bg-zinc-400 rounded-full "></div>
-          <h3 className="cursor-pointer relative group">
+          <h3 className="cursor-pointer relative group" onClick={() => Navigate("/home/liked")}>
             Liked
             <span className="absolute bottom-[-1.1px] left-0 right-0 mx-auto h-[1.1px] w-full bg-purple-500 scale-x-0 origin-center transition-transform group-hover:scale-x-100"></span>
           </h3>

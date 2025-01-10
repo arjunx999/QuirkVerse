@@ -5,7 +5,7 @@ import axios from "axios"
 const PostCard = ({post}) => {
     const token = sessionStorage.getItem("token");
     const { user, setUser } = useAppContext();
-    console.log(post)
+    // console.log(post)
     // console.log(user)
     const isLiked = user.likedPosts.includes(post._id)
     // console.log(isLiked)
@@ -76,7 +76,7 @@ const PostCard = ({post}) => {
             <div className='flex items-centert text-2xl gap-x-2'>
                 <i className={`ri-heart-${isLiked ? 'fill text-red-600' : 'line'} like-icon`} onClick={handleLike}></i>
                 {post.likes != 0 ? <h3>{post.likes}</h3> : null}
-                <i className={`ri-bookmark-${isSaved ? 'fill text-white' : 'line'} save-icon`} onClick={handleSave}></i>
+                <i className={`ri-bookmark-${isSaved ? 'fill text-zinc-300' : 'line'} save-icon`} onClick={handleSave}></i>
                 <i className="ri-arrow-right-up-line"></i>
             </div>
         </div>

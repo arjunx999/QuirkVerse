@@ -107,7 +107,7 @@ const HomeForYou = () => {
             <span className="absolute bottom-[-1.1px] left-0 right-0 mx-auto h-[1.1px] w-full bg-purple-500 scale-x-0 origin-center transition-transform group-hover:scale-x-100"></span>
           </h3>
           <div className="w-[1.3px] h-[40%] bg-zinc-400 rounded-full "></div>
-          <h3 className="cursor-pointer relative group">
+          <h3 className="cursor-pointer relative group"  onClick={() => Navigate("/home/following")}>
             Following
             <span className="absolute bottom-[-1.1px] left-0 right-0 mx-auto h-[1.1px] w-full bg-purple-500 scale-x-0 origin-center transition-transform group-hover:scale-x-100"></span>
           </h3>

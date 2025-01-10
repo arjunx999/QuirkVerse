@@ -49,7 +49,13 @@ export const getLikedPosts = async (req, res) => {
     try {
       const { userId } = req.params;
   
-      const user = await User.findById(userId).populate("likedPosts");
+      const user = await User.findById(userId).populate({
+        path: "likedPosts",
+        populate: {
+          path: "author",
+          select: "username picturePath",
+        },
+      });
       if (!user) {
         return res.status(404).json({ message: "User not found." });
       }
@@ -154,11 +160,17 @@ export const getSavedPosts = async (req, res) => {
     try {
       const { userId } = req.params;
   
-      const user = await User.findById(userId).populate("savedPosts");
+      const user = await User.findById(userId).populate({
+        path: "savedPosts",
+        populate: {
+          path: "author",
+          select: "username picturePath",
+        },
+      });
       if (!user) {
         return res.status(404).json({ message: "User not found." });
       }
-  
+      console.log(user.savedPosts)
       res.status(200).json(user.savedPosts);
     } catch (error) {
       res.status(500).json({ message: error.message });

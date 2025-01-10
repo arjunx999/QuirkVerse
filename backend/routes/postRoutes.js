@@ -15,7 +15,7 @@ router.get("/", getPosts);
 router.get("/:id", getPostById);
 
 // Getting only Liked posts
-router.get("/users/:userId/liked-posts", getLikedPosts);
+router.get("/users/:userId/liked-posts", verifyToken, getLikedPosts);
 
 // getting only posts from followed people
 router.get("/users/:userId/following-posts", verifyToken, getPostsFromFollowedUsers);
