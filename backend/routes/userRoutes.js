@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", getAllUsers);
 
 // Get user details by ID
-router.get("/:id", getUser);
+router.get("/:id", verifyToken, getUser);
 
 // Get user's followers
 router.get("/:id/followers", getUserFollowers);

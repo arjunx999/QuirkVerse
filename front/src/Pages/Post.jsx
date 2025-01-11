@@ -88,8 +88,10 @@ const Post = () => {
     Navigate("/");
   };
 
+  const { person, setPerson } = useAppContext()
   const viewUserProfile = () => {
-    
+    setPerson(posts.author._id)
+    Navigate(`/users/${posts.author._id}`)
   }
 
   // useEffect(() => {
@@ -164,7 +166,7 @@ const Post = () => {
           className="w-[42%] h-[7.5vh] bg-red-500 mx-auto rounded-3xl my-[2.2vh] glass-navbar2 flex items-center justify-center gap-x-[2vw] font-fredoka font-medium text-zinc-200 absolute 
         top-[0.5vh] z-[100] left-[30%] "
         >
-          <h3 className="cursor-pointer relative group">
+          <h3 className="cursor-pointer relative group" onClick={() => Navigate("/home/for-you")}>
             For-you
             <span className="absolute bottom-[-1.1px] left-0 right-0 mx-auto h-[1.1px] w-full bg-purple-500 scale-x-0 origin-center transition-transform group-hover:scale-x-100"></span>
           </h3>
@@ -239,10 +241,9 @@ const Post = () => {
                   } save-icon`}
                   onClick={handleSave}
                 ></i>
-                <i
-                  className="ri-arrow-right-up-line cursor-pointer"
-                  onClick={() => Navigate(`/post/${post._id}`)}
-                ></i>
+                <h2 className="font-fredoka font-medium text-lg ">
+                  {new Date(posts.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                </h2>
               </div>
             </div>
           </div>

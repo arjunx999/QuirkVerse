@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyToken } from "../middleware/auth.js";
-import { createPost, getPosts, getPostById, likePost, deletePost, getLikedPosts, getPostsFromFollowedUsers, savePost, getSavedPosts } from "../controllers/posts.js";
+import { createPost, getPosts, getPostById, likePost, deletePost, getLikedPosts, getPostsFromFollowedUsers, savePost, getSavedPosts, getPostsByUser } from "../controllers/posts.js";
 
 const router = express.Router();
 
@@ -32,5 +32,8 @@ router.get("/users/:userId/saved-posts", verifyToken, getSavedPosts);
 
 // Delete a post (authenticated)
 router.delete("/:id", verifyToken, deletePost);
+
+// Get all the posts of a user (authenticated)
+router.get("/user/:userId", verifyToken, getPostsByUser);
 
 export default router;

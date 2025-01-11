@@ -70,13 +70,13 @@ const PostCard = ({post}) => {
 
   return (
     // <div className="flex-grow-0 flex-shrink-0 w-[calc(33.33%-1vw)] h-[33.6vh] bg-blue-600 rounded-3xl glass-effect3 "></div>
-    <div className="flex-grow-0 flex-shrink-0 w-[37vw] h-[42vh] bg-blue-600 rounded-[1.5rem] glass-effect3 px-4 pt-3 pb-[0.70rem] flex flex-col">
+    <div className="flex-grow-0 flex-shrink-0 w-[37vw] h-[42vh] bg-blue-600 rounded-[1.5rem] glass-effect3 px-4 pt-3 pb-[0.40rem] flex flex-col">
         <div className='w-full h-[84%] bg--500'>
             <h1 className='font-brunoAce leading-relaxed text-zinc-200 '>{post.title}</h1>
             <hr className='my-1'/>
             <h3 className='font-fredoka leading-snug text-zinc-300'>{post.content}</h3>
         </div>
-        <div className='w-full h-[16%] bg--500 flex items-center justify-between '>
+        <div className='w-full h-[16%] bg--500 flex items-center justify-between bg--500 '>
             <div className='flex items-center gap-x-2'>
                 <div className='w-[2.6vw] h-[2.6vw] bg-zinc-100 overflow-hidden 
                 rounded-full object-contain '><img src={post.author.picturePath} alt=""/></div>

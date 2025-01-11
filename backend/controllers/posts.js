@@ -191,3 +191,21 @@ export const deletePost = async (req, res) => {
         res.status(500).json({message: error.message})
     }
 }
+
+// Fetch all posts created by a specific user
+export const getPostsByUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const posts = await Post.find({ author: userId }).populate("author", "username picturePath");
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
