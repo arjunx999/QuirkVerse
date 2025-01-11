@@ -121,6 +121,35 @@
   box-sizing: border-box;
 }
 
+.button-5 {
+  align-items: center;
+  background-color: transparent;
+  border: 1.2px solid rgba(131, 131, 131, 5);
+  border-radius: .30rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 1.25;
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button-5:hover {
+  background-color: rgba(225, 225, 225, 0.85);
+  color: rgba(0, 0, 0, 0.85); 
+  box-shadow: rgb(0, 0, 0) 0 1px 3px 0;
+  box-sizing: border-box;
+}
+
 .like-icon {
   /* font-size: 240px; */
   transition: transform 0.2s ease, color 0.2s ease;

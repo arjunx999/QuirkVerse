@@ -36,7 +36,7 @@ const HomeLiked = () => {
           },
         });
         const result = await response.json();
-        console.log(result)
+        // console.log(result)
         setPosts(result);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -47,6 +47,7 @@ const HomeLiked = () => {
 
   const handleLogOut = () => {
     // localStorage.removeItem("user")
+    sessionStorage.removeItem("token")
     setUser(null)
     Navigate("/")
   }

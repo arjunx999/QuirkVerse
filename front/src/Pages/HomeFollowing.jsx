@@ -47,6 +47,7 @@ const HomeFollowing = () => {
 
   const handleLogOut = () => {
     // localStorage.removeItem("user")
+    sessionStorage.removeItem("token")
     setUser(null);
     Navigate("/");
   };

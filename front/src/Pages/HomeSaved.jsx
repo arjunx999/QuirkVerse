@@ -47,6 +47,7 @@ const HomeSaved = () => {
 
   const handleLogOut = () => {
     // localStorage.removeItem("user")
+    sessionStorage.removeItem("token")
     setUser(null);
     Navigate("/");
   };

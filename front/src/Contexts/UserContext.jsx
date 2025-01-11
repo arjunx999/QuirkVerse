@@ -21,7 +21,18 @@ export const AppProvider = ({ children }) => {
         }
     }, [user]);
     
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState(() => {
+        const savedPost = sessionStorage.getItem("post")
+        return savedPost ? JSON.parse(savedPost) : null;
+    });
+
+    useEffect(() => {
+        if(posts) {
+            sessionStorage.setItem("post", JSON.stringify(posts))
+        } else {
+            sessionStorage.removeItem("post")
+        }
+    }, [posts])
 
     //state variables to be used throughout the application
     const contextValue = {

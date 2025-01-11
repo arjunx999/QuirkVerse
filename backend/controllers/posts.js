@@ -170,7 +170,7 @@ export const getSavedPosts = async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: "User not found." });
       }
-      console.log(user.savedPosts)
+    //   console.log(user.savedPosts)
       res.status(200).json(user.savedPosts);
     } catch (error) {
       res.status(500).json({ message: error.message });
