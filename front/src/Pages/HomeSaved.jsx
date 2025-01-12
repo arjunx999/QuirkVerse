@@ -64,6 +64,12 @@ const HomeSaved = () => {
     // add a basic ui in future with the same message as above
   }
 
+  const { person, setPerson } = useAppContext()
+    const viewYourProfile = () => {
+      setPerson(user._id)
+      Navigate(`/users/${user._id}`)
+    }
+
   return (
     <div className="w-[100vw] min-h-[100vh] h-auto bg-[#050405] flex">
       {/* Sidebar */}
@@ -80,10 +86,10 @@ const HomeSaved = () => {
           <div className="w-[90%] h-[0.5px] rounded-full bg-zinc-400 mb-9 mt-4"></div>
           <div className="w-full h-[80vh] bg--600 flex flex-col px-3">
             <div className="flex flex-col items-center gap-3 h-[50%] bg--600">
-              <div className="w-[5vw] h-[5vw] bg-zinc-100 rounded-full overflow-hidden">
+              <div className="w-[5vw] h-[5vw] bg-zinc-100 rounded-full overflow-hidden cursor-pointer" onClick={viewYourProfile}>
                 <img src={user.picturePath} alt="" />
               </div>
-              <h2 className="font-brunoAce text-lg font-medium ">
+              <h2 className="font-brunoAce text-lg font-medium  cursor-pointer" onClick={viewYourProfile}>
                 {user.name}
               </h2>
               <div className="w-full h-[0.5px] rounded-full bg-zinc-400 mb-3 mt-3"></div>

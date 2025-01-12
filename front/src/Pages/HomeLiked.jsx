@@ -56,6 +56,13 @@ const HomeLiked = () => {
   //   console.log("All posts:", posts);
   // }, [posts]);
 
+  const { person, setPerson } = useAppContext()
+    const viewYourProfile = () => {
+      setPerson(user._id)
+      Navigate(`/users/${user._id}`)
+  }
+  
+
   if (user === null) {
     return <div className="w-[100vw] h-[100vh] bg-[#050405] flex items-center justify-center flex-col ">
       <img src={notfound} alt="" className="scale-75" />
@@ -80,8 +87,8 @@ const HomeLiked = () => {
           <div className="w-[90%] h-[0.5px] rounded-full bg-zinc-400 mb-9 mt-4"></div>
           <div className="w-full h-[80vh] bg--600 flex flex-col px-3">
             <div className="flex flex-col items-center gap-3 h-[50%] bg--600">
-              <div className='w-[5vw] h-[5vw] bg-zinc-100 rounded-full overflow-hidden'><img src={user.picturePath} alt="" /></div>
-              <h2 className="font-brunoAce text-lg font-medium ">{user.name}</h2>
+              <div className='w-[5vw] h-[5vw] bg-zinc-100 rounded-full overflow-hidden cursor-pointer' onClick={viewYourProfile}><img src={user.picturePath} alt="" /></div>
+              <h2 className="font-brunoAce text-lg font-medium  cursor-pointer" onClick={viewYourProfile}>{user.name}</h2>
               <div className="w-full h-[0.5px] rounded-full bg-zinc-400 mb-3 mt-3"></div>
               <div className="w-full flex flex-col bg--300 text-zinc-400 gap-1 ">
                 <h2 className="font-fredoka text-sm font-medium ">Username: {user.username}</h2>
@@ -105,7 +112,7 @@ const HomeLiked = () => {
         <div className=" absolute bottom-0 right-0 m-[1.5vw] z-[1000] ">
           <div onClick={createPostRoute} ><AuthButton text="Create New Post" /></div>
           
-        </div> onClick={() => Navigate("/home/liked")}
+        </div>
         {/* Navbar */}
         <div className="w-[42%] h-[7.5vh] bg-red-500 mx-auto rounded-3xl my-[2.2vh] glass-navbar2 flex items-center justify-center gap-x-[2vw] font-fredoka font-medium text-zinc-200 absolute 
         top-[0.5vh] z-[100] left-[30%] ">

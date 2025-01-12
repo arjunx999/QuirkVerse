@@ -135,7 +135,7 @@ const User = () => {
               {searchUser?.followers?.length} followers
             </h2>
             <h2 className="font-fredoka font-medium text-lg ">
-              {userPosts.length > 1? `${userPosts.length} posts` : `${userPosts.length} post`}
+              {userPosts.length != 1? `${userPosts.length} posts` : `${userPosts.length} post`}
             </h2>
             </div>
             <h2 className="font-fredoka font-medium text-lg ">
