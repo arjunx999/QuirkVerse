@@ -29,13 +29,14 @@ export const register = async (req, res) => {
         const salt = await bcrypt.genSalt() // random data for encryption
         const passwordHash = await bcrypt.hash(password, salt)
 
+        const finalPicturePath = picturePath || "https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png";
         // creating a new user in the database
         const newUser = new User ({
             username,
             name,
             email,
             password: passwordHash,
-            picturePath,
+            picturePath: finalPicturePath,
             // followers,
             // following,
         })

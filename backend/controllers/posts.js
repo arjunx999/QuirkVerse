@@ -21,7 +21,7 @@ export const createPost = async (req, res) => {
 }
 
 //  read all posts
-export const getPosts = async (Req, res) => {
+export const getPosts = async (req, res) => {
     try {
         const posts = await Post.find().populate("author", "username picturePath");
         res.status(200).json(posts)
