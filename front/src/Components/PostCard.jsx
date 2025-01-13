@@ -3,7 +3,7 @@ import { useAppContext } from '../Contexts/UserContext';
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 
-const PostCard = ({post}) => {
+const PostCard = ({ post, admin_status }) => {
     const token = sessionStorage.getItem("token");
     const { user, setUser } = useAppContext();
     const { posts, setPosts } = useAppContext();
@@ -74,9 +74,27 @@ const PostCard = ({post}) => {
         Navigate(`/users/${post.author._id}`)
     }
 
+    const handleDeletePost = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:9999/posts/${post._id}`, {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });              
+            if (response.status === 200) {
+                alert("Post deleted successfully");
+                // Remove post from UI
+                // setPosts((prev) => prev.filter((p) => p._id !== post._id));
+                Navigate("/home/for-you")
+            }    
+        } catch (error) {
+            console.error('Error deleting the post:', error);
+        }
+    }
+
   return (
     // <div className="flex-grow-0 flex-shrink-0 w-[calc(33.33%-1vw)] h-[33.6vh] bg-blue-600 rounded-3xl glass-effect3 "></div>
-    <div className="flex-grow-0 flex-shrink-0 w-[37vw] h-[42vh] bg-blue-600 rounded-[1.5rem] glass-effect3 px-4 pt-3 pb-[0.40rem] flex flex-col">
+    <div className="flex-grow-0 flex-shrink-0 w-[37vw] h-[42vh] bg-blue-600 rounded-[1.5rem] glass-effect3 px-4 pt-3 pb-[0.40rem] flex flex-col relative ">
         <div className='w-full h-[84%] bg--500'>
             <h1 className='font-brunoAce leading-relaxed text-zinc-200 cursor-pointer ' onClick={PostDetails} >{post.title}</h1>
             <hr className='my-1'/>
@@ -95,6 +113,7 @@ const PostCard = ({post}) => {
                 {post.likes != 0 ? <h3>{post.likes}</h3> : null}
                 <i className={`ri-bookmark-${isSaved ? 'fill text-zinc-300' : 'line'} save-icon`} onClick={handleSave}></i>
                 <i className="ri-arrow-right-up-line cursor-pointer" onClick={PostDetails}></i>
+                {admin_status && <div className='w-[3.3vw] h-[3.3vw] bg-red-700 absolute -top-[.65rem] -right-[.65rem] rounded-full flex items-center justify-center delete-button'><i className="ri-delete-bin-5-fill cursor-pointer text-zinc-300 "  onClick={handleDeletePost}></i> </div> }
             </div>
         </div>
     </div>

@@ -182,10 +182,18 @@ export const deletePost = async (req, res) => {
     try {
         const { id }  = req.params
 
-        const post = await Post.findByIdAndDelete(id)
+        const post = await Post.findById(id)
         if(!post) {
             return res.status(404).json({message: "post not found"})
         }
+        await Post.findByIdAndDelete(id);
+
+        // Remove the post from users' saved or liked lists
+        await User.updateMany(
+            { $or: [{ savedPosts: id }, { likedPosts: id }] },
+            { $pull: { savedPosts: id, likedPosts: id } }
+        );
+
         res.status(200).json({message: "post deleted successfully"})
     } catch (error) {
         res.status(500).json({message: error.message})

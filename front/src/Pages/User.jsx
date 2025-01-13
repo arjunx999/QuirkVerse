@@ -25,6 +25,7 @@ const User = () => {
 
   const { user, setUser } = useAppContext();
   const { person, setPerson } = useAppContext();
+  const [ isAdmin, setIsAdmin ] = useState(false)
 
   useEffect(() => {
     if (user === null) {
@@ -42,6 +43,9 @@ const User = () => {
         });
         const result = await response.json();
         setSearchUser(result);
+        if(user._id === person) {
+          setIsAdmin(true)
+        }
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
@@ -156,7 +160,7 @@ const User = () => {
         {/* Posts From User */}
         <div className="w-full bg--800 h-[59vh] flex flex-wrap gap-x-[2vw] gap-y-[3vh] px-[2vw] pt-[4vh] overflow-y-scroll overflow-x-hidden pb-[2.5vh] z-50">
           {userPosts.map((post, index) => (
-            <PostCard post={post} key={index} />
+            <PostCard post={post} key={index} admin_status={isAdmin} />
           ))}
         </div>
       </div>
