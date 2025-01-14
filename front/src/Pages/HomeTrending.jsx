@@ -6,7 +6,7 @@ import PostCard from "../Components/PostCard";
 import notfound from "../assets/warning_404.svg"
 import AuthButton from "../Components/AuthButton";
 
-const HomeLiked = () => {
+const HomeTrending = () => {
   const Navigate = useNavigate();
   const { user, setUser } = useAppContext();
   const token = sessionStorage.getItem("token");
@@ -28,7 +28,7 @@ const HomeLiked = () => {
     }
     const fetchLikedPosts = async () => {
       try {
-        const url = `http://localhost:9999/posts/users/${user._id}/liked-posts`;
+        const url = `http://localhost:9999/posts/users/${user._id}/trending-posts`;
         const response = await fetch(url, {
           method: "GET",
           headers: {
@@ -155,4 +155,4 @@ const HomeLiked = () => {
   );
 };
 
-export default HomeLiked;
+export default HomeTrending;

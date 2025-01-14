@@ -54,7 +54,7 @@ export const editPost = async (req, res) => {
 //  read all posts
 export const getPosts = async (req, res) => {
     try {
-        const posts = await Post.find().populate("author", "username picturePath");
+        const posts = await Post.find().populate("author", "username picturePath").sort({ createdAt: -1 });
         res.status(200).json(posts)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -98,6 +98,21 @@ export const getLikedPosts = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
 };  
+
+// reading trending posts
+export const getTrendingPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({ likes: { $gt: 0 } }) // Filter posts with likes > 0
+      .populate("author", "username picturePath")
+      .sort({ likes: -1 });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 
 // Fetch posts from followed users
 export const getPostsFromFollowedUsers = async (req, res) => {

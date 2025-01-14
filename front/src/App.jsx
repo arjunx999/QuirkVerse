@@ -14,6 +14,7 @@ import CreatePost from "./Pages/CreatePost";
 import NotFound from "./Pages/NotFound";
 import HomeSaved from "./Pages/HomeSaved"
 import EditPost from "./Pages/EditPost";
+import HomeTrending from "./Pages/HomeTrending";
 
 const App = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
@@ -40,6 +41,7 @@ const App = () => {
         <Route path="/home/for-you" element={<HomeForYou />} />
         <Route path="/home/following" element={<HomeFollowing />} />
         <Route path="/home/liked" element={<HomeLiked />} />
+        <Route path="/home/trending" element={<HomeTrending />} />
         <Route path="/home/saved" element={<HomeSaved />} />
         <Route path="/posts/:id" element={<Post />} />
         <Route path="/posts/create" element={<CreatePost />} />

@@ -107,10 +107,15 @@ const HomeForYou = () => {
           
         </div>
         {/* Navbar */}
-        <div className="w-[42%] h-[7.5vh] bg-red-500 mx-auto rounded-3xl my-[2.2vh] glass-navbar2 flex items-center justify-center gap-x-[2vw] font-fredoka font-medium text-zinc-200 absolute 
-        top-[0.5vh] z-[100] left-[30%] ">
+        <div className="w-[53%] h-[7.5vh] bg-red-500 mx-auto rounded-3xl my-[2.2vh] glass-navbar2 flex items-center justify-center gap-x-[2vw] font-fredoka font-medium text-zinc-200 absolute 
+        top-[0.5vh] z-[100] left-[25%] ">
           <h3 className="cursor-pointer relative group">
             For-you
+            <span className="absolute bottom-[-1.1px] left-0 right-0 mx-auto h-[1.1px] w-full bg-purple-500 scale-x-0 origin-center transition-transform group-hover:scale-x-100"></span>
+          </h3>
+          <div className="w-[1.3px] h-[40%] bg-zinc-400 rounded-full "></div>
+          <h3 className="cursor-pointer relative group" onClick={() => Navigate("/home/trending")}>
+            Trending
             <span className="absolute bottom-[-1.1px] left-0 right-0 mx-auto h-[1.1px] w-full bg-purple-500 scale-x-0 origin-center transition-transform group-hover:scale-x-100"></span>
           </h3>
           <div className="w-[1.3px] h-[40%] bg-zinc-400 rounded-full "></div>

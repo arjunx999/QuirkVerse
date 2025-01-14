@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyToken } from "../middleware/auth.js";
-import { createPost, getPosts, getPostById, likePost, deletePost, getLikedPosts, getPostsFromFollowedUsers, savePost, getSavedPosts, getPostsByUser, editPost } from "../controllers/posts.js";
+import { createPost, getPosts, getPostById, likePost, deletePost, getLikedPosts, getPostsFromFollowedUsers, savePost, getSavedPosts, getPostsByUser, editPost, getTrendingPosts } from "../controllers/posts.js";
 
 const router = express.Router();
 
@@ -16,6 +16,9 @@ router.get("/:id", getPostById);
 
 // Getting only Liked posts
 router.get("/users/:userId/liked-posts", verifyToken, getLikedPosts);
+
+// getting trending posts
+router.get("/users/:userId/trending-posts", verifyToken, getTrendingPosts);
 
 // getting only posts from followed people
 router.get("/users/:userId/following-posts", verifyToken, getPostsFromFollowedUsers);
