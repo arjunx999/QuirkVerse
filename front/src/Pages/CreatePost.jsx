@@ -12,7 +12,7 @@ const CreatePost = () => {
   const token = sessionStorage.getItem("token");
 
   const HeadToHome = () => {
-    Navigate("/");
+    Navigate("/home/for-you");
   };
 
   if (user === null) {

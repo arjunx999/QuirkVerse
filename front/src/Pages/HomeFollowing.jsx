@@ -12,7 +12,7 @@ const HomeFollowing = () => {
   const { user, setUser } = useAppContext();
 
   const HeadToHome = () => {
-    Navigate("/");
+    Navigate("/home/for-you");
   };
 
   const createPostRoute = () => {

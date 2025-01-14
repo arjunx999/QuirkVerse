@@ -12,7 +12,7 @@ const HomeLiked = () => {
   const token = sessionStorage.getItem("token");
 
   const HeadToHome = () => {
-    Navigate("/");
+    Navigate("/home/for-you");
   };
 
   const createPostRoute =() => {
