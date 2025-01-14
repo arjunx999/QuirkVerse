@@ -76,6 +76,33 @@ const User = () => {
       Navigate(`/users/${user._id}`)
     }
 
+    const handleFollow = async () => {
+      try {
+        const url = `http://localhost:9999/users/${person}/${user._id}`;
+        const response = await fetch(url, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    
+        if (response.ok) {
+          const isFollowing = searchUser.followers?.includes(user._id);
+    
+          setSearchUser((prevState) => ({
+            ...prevState,
+            followers: isFollowing
+              ? prevState.followers.filter((fId) => fId !== user._id)
+              : [...prevState.followers, user._id],
+          }));
+        } else {
+          console.error("Failed to update follower status");
+        }
+      } catch (error) {
+        console.error("Error updating follower status:", error);
+      }
+    }; 
+
   return (
     <div className="w-[100vw] min-h-[100vh] h-auto bg-[#050405] flex">
       {/* Sidebar */}
@@ -150,10 +177,9 @@ const User = () => {
             <h2 className="font-fredoka font-medium text-lg ">
               Joined {new Date(searchUser.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
             </h2>
-            
-            <div className="w-[7vw] h-[5vh] text-base font-medium button-5 mt-2 ">
-              Follow
-            </div>
+            {user._id != person && <div className="w-[7vw] h-[5vh] text-base font-medium button-5 mt-2 " onClick={handleFollow}>
+              {searchUser.followers?.includes(user._id) ? "Unfollow" : "Follow"}
+            </div> }
           </div>
         </div>
         {/* <h1 className="font-fredoka text-zinc-300 font-semibold text-2xl ml-7 my-3">Posts by {searchUser.username} :</h1> */}

@@ -48,12 +48,15 @@ export const addRemoveFollower = async (req, res) => {
         if(user.followers.includes(followerId)) {
             // friend already exists so remove
             user.followers = user.followers.filter((id) => id !== followerId);
-            follower.followers = follower.followers.filter((id) => id !== id);
+            follower.following = follower.following.filter((id) => id !== id);
         } else {
             // friend does not exist so add
             user.followers.push(followerId);
-            follower.followers.push(id);
+            follower.following.push(id);
           }
+        await user.save();
+        await follower.save();
+        res.status(200).json({ message: "Follower status updated successfully" });
     } catch (error) {
         res.status(404).json({ message: err.message });
     }

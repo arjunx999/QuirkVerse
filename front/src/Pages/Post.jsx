@@ -231,9 +231,9 @@ const Post = () => {
                 <h3 className="font-fredoka text-zinc-300 text- font-bold cursor-pointer " onClick={viewUserProfile}>
                   {posts.author.username}
                 </h3>
-                <div className="px-2 h-[4.2vh] text-sm font-medium button-5">
+                {/* <div className="px-2 h-[4.2vh] text-sm font-medium button-5">
                   Follow
-                </div>
+                </div> */}
               </div>
               <div className="flex items-center text-3xl gap-x-3 right-[15vw] absolute ">
                 <i
