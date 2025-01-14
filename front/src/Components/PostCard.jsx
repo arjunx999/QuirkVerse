@@ -92,6 +92,11 @@ const PostCard = ({ post, admin_status }) => {
         }
     }
 
+    const handleUpdatePost = () => {
+        setPosts(post)
+        Navigate(`/posts/edit/${post._id}`)
+    }
+
   return (
     // <div className="flex-grow-0 flex-shrink-0 w-[calc(33.33%-1vw)] h-[33.6vh] bg-blue-600 rounded-3xl glass-effect3 "></div>
     <div className="flex-grow-0 flex-shrink-0 w-[37vw] h-[42vh] bg-blue-600 rounded-[1.5rem] glass-effect3 px-4 pt-3 pb-[0.40rem] flex flex-col relative ">
@@ -113,7 +118,8 @@ const PostCard = ({ post, admin_status }) => {
                 {post.likes != 0 ? <h3>{post.likes}</h3> : null}
                 <i className={`ri-bookmark-${isSaved ? 'fill text-zinc-300' : 'line'} save-icon`} onClick={handleSave}></i>
                 <i className="ri-arrow-right-up-line cursor-pointer" onClick={PostDetails}></i>
-                {admin_status && <div className='w-[3.3vw] h-[3.3vw] bg-red-700 absolute -top-[.65rem] -right-[.65rem] rounded-full flex items-center justify-center delete-button'><i className="ri-delete-bin-5-fill cursor-pointer text-zinc-300 "  onClick={handleDeletePost}></i> </div> }
+                {admin_status && <div className='w-[3.3vw] h-[3.3vw] bg-red-700 absolute -top-[1rem] -right-[.65rem] rounded-full flex items-center justify-center delete-button'><i className="ri-delete-bin-5-fill cursor-pointer text-zinc-300 "  onClick={handleDeletePost}></i> </div> }
+                {admin_status && <div className='w-[3.3vw] h-[3.3vw] bg-blue-700 absolute -top-[1rem] right-[2.5rem] rounded-full flex items-center justify-center delete-button'><i className="ri-edit-2-fill cursor-pointer text-zinc-300 "  onClick={handleUpdatePost}></i> </div> }
             </div>
         </div>
     </div>

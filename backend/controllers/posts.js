@@ -20,6 +20,37 @@ export const createPost = async (req, res) => {
     }
 }
 
+// Editing a post
+export const editPost = async (req, res) => {
+  try {
+    const { title, content, author, pictureUrl } = req.body;
+    const { id } = req.params;
+
+    if (!title || !content || !author) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const postAfterUpdate = await Post.findByIdAndUpdate(
+      id,
+      { title, content, author, pictureUrl },
+      { new: true }
+    );
+
+    if (!postAfterUpdate) {
+      return res.status(404).json({ message: "Post Not Found" });
+    }
+
+    return res.status(200).json({ 
+      message: "Post Updated Successfully", 
+      post: postAfterUpdate 
+    });
+  } catch (error) {
+    console.error("Error updating post:", error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+
 //  read all posts
 export const getPosts = async (req, res) => {
     try {

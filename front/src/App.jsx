@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import CreatePost from "./Pages/CreatePost";
 import NotFound from "./Pages/NotFound";
 import HomeSaved from "./Pages/HomeSaved"
+import EditPost from "./Pages/EditPost";
 
 const App = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/home/saved" element={<HomeSaved />} />
         <Route path="/posts/:id" element={<Post />} />
         <Route path="/posts/create" element={<CreatePost />} />
+        <Route path="/posts/edit/:id" element={<EditPost />} />
         <Route path="/users/:id" element={<User />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
