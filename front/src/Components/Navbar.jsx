@@ -22,7 +22,7 @@ const Navbar = () => {
         />
       </div>
       <div className="w-[20vw] h-[8vh] bg-zinc- flex justify-center gap-3 items-center">
-        <a href="https://github.com/arjunx999" target="blank">
+        <a href="https://github.com/arjunx999/QuirkVerse" target="blank">
           {" "}
           <i className="ri-github-fill text-zinc-100 text-2xl cursor-pointer mr-1"></i>
         </a>

@@ -214,7 +214,7 @@ const Post = () => {
             </div>
             <div className="w-full h-[0.5px] rounded-full bg-zinc-300 mb-3 mt-[.15rem] "></div>
             <div className="w-full h-[61vh] bg--400 overflow-auto flex-grow ">
-              <h3 className="font-lato text-lg font-semibold leading-6 text-zinc-300 ">
+              <h3 className="font-lato text-lg font-semibold leading-6 text-zinc-300 whitespace-pre-wrap ">
                 {posts.content}
               </h3>
             </div>
