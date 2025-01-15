@@ -126,7 +126,7 @@ export const getPostsFromFollowedUsers = async (req, res) => {
       }
   
       // Fetch posts where the author is in the user's "following" list
-      const posts = await Post.find({ author: { $in: user.following } }).populate("author", "username");
+      const posts = await Post.find({ author: { $in: user.following } }).populate("author", "username picturePath");
 
       res.status(200).json(posts);
     } catch (error) {

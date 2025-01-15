@@ -31,7 +31,8 @@ const userSchema = mongoose.Schema({
     default: "https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png",
   },
   followers: {
-    type: Array,
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    // type: Array,
     default: [],
   },
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],

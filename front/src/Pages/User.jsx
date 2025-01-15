@@ -26,12 +26,16 @@ const User = () => {
   const { user, setUser } = useAppContext();
   const { person, setPerson } = useAppContext();
   const [ isAdmin, setIsAdmin ] = useState(false)
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [followersDetails, setFollowersDetails] = useState([]);
+  const [pfp, setPfp] = useState(false);
 
   useEffect(() => {
     if (user === null) {
       alert("User Not Logged In. Please Login to Continue");
       Navigate("/login");
     }
+  
     const fetchUserInfo = async () => {
       try {
         const url = `http://localhost:9999/users/${person}`;
@@ -43,15 +47,14 @@ const User = () => {
         });
         const result = await response.json();
         setSearchUser(result);
-        if(user._id === person) {
-          setIsAdmin(true)
+        if (user._id === person) {
+          setIsAdmin(true);
         }
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
     };
-    // console.log(searchUser);
-    fetchUserInfo();
+  
     const fetchUserPosts = async () => {
       try {
         const url = `http://localhost:9999/posts/user/${person}`;
@@ -64,13 +67,14 @@ const User = () => {
         const result = await response.json();
         setUserPosts(result);
       } catch (error) {
-        console.error("Error fetching user info:", error);
+        console.error("Error fetching user posts:", error);
       }
     };
+  
+    fetchUserInfo();
     fetchUserPosts();
-    // console.log(userPosts);
-  }, [user, Navigate, person]);
-
+  }, [user, person, token]);
+  
     const viewYourProfile = () => {
       setPerson(user._id)
       Navigate(`/users/${user._id}`)
@@ -95,13 +99,49 @@ const User = () => {
               ? prevState.followers.filter((fId) => fId !== user._id)
               : [...prevState.followers, user._id],
           }));
+          // fetchSavedPosts();
         } else {
           console.error("Failed to update follower status");
         }
       } catch (error) {
         console.error("Error updating follower status:", error);
       }
-    }; 
+    };
+    
+    const fetchFollowersDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:9999/users/${person}/followers`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setFollowersDetails(response.data);
+        // 8
+      } catch (error) {
+        console.error("Error fetching followers' details:", error);
+      }
+    };
+  
+
+    const toggleFollowers = () => {
+      setShowFollowers(!showFollowers);
+      if (!showFollowers) fetchFollowersDetails(); 
+    };  
+
+    const togglePfp = () => {
+      setPfp(!pfp);
+    };  
+
+    const HeadBack = () => {
+      Navigate("/home/for-you")
+    }
+    
+    // const handleCheckFollower = () => {
+    //   setPerson(follower._id)
+    // }
 
   return (
     <div className="w-[100vw] min-h-[100vh] h-auto bg-[#050405] flex">
@@ -151,14 +191,14 @@ const User = () => {
       <div className="w-[80%] min-h-[100vh] h-full flex flex-col items- pt-[6vh] relative ">
         <div
           className="flex items-center justify-center absolute top-[.10rem] left-0 w-[3.4vw] h-[3.4vw] rounded- bg--600 glass-navbar2 m-[0.8vw] z-[1000] "
-          onClick={() => Navigate(-1)}
+          onClick={() => HeadBack()}
         >
           <i className="ri-arrow-left-s-line cursor-pointer text-3xl"></i>
         </div>
         <div className="w-[90%] h-[35vh] rounded-3xl bg--700 flex items-center justify-center glass-effect mx-auto ">
           <div className="w-[30%] h-full bg--50 flex items-center justify-center">
-            <div className="w-[14vw] h-[14vw] bg--100 rounded-full overflow-hidden ">
-              <img src={searchUser.picturePath} alt="" />
+            <div className="w-[14vw] h-[14vw] bg-zinc-300 rounded-full overflow-hidden ">
+              <img src={searchUser.picturePath} alt="" onClick={togglePfp}/>
             </div>
           </div>
           <div className="w-[70%] h-full bg--900 flex flex-col  text-zinc-300 pt-7 px-7">
@@ -167,9 +207,12 @@ const User = () => {
               {searchUser.username}
             </h1>
             <div className="flex gap-4 items-center">
-            <h2 className="font-fredoka font-medium text-lg pt-1">
-              {searchUser?.followers?.length} followers
-            </h2>
+            <h2
+                className="text-lg cursor-pointer"
+                onClick={toggleFollowers}
+              >
+                {searchUser?.followers?.length} followers
+              </h2>
             <h2 className="font-fredoka font-medium text-lg ">
               {userPosts.length != 1? `${userPosts.length} posts` : `${userPosts.length} post`}
             </h2>
@@ -182,6 +225,56 @@ const User = () => {
             </div> }
           </div>
         </div>
+
+        {pfp && (
+          <div className="fixed w-[100vw] h-[100vh] -mt-[6vh] bg-black bg-opacity-60 flex items-center justify-center z-[100]">
+            <div className=" bg-black w-[53.5vh] h-[53.5vh] flex flex-col rounded-2xl -ml-[20vw] relative" >
+              <img className="rounded-2xl" src={searchUser.picturePath}></img>
+              <i className="ri-close-circle-line text-3xl absolute cursor-pointer text-white -right-8 -top-8 " onClick={togglePfp}></i>    
+            </div>
+            
+          </div>
+        )}
+
+        {showFollowers && (
+          <div className="fixed w-[100vw] h-[100vh] -mt-[6vh] bg-black bg-opacity-60 flex items-center justify-center z-[100]">
+            <div className="glass-navbar5 bg--800 w-[28%] h-[55vh] flex flex-col rounded-2xl -ml-[20vw] relative">
+              <div className="w-full h-[16%] bg--300 flex justify-between items-center p-5 text-zinc-200 font-fredoka">
+                <h2 className="text-2xl font-bold">Followers</h2>
+                <i className="ri-close-circle-line text-2xl  cursor-pointer " onClick={toggleFollowers}></i>
+              </div>
+              <div className="w-[95%] h-[0.11vh] mx-auto bg-zinc-400 rounded-full "></div>
+              <div className="w-full h-[84%] bg--300 px-5 mt-3 mb-4 overflow-y-auto">
+                <ul>
+                  {followersDetails.map((follower, index) => (
+                    <li className="flex items-center gap-x-4" key={index}>
+                      <div className="w-10 h-10 bg-red-500 rounded-full cursor-pointer overflow-hidden object-contain "
+                        onClick={() => {
+                          setPerson(follower._id);
+                          Navigate(`/users/${follower._id}`);
+                          toggleFollowers()
+                        }}>
+                        <img src={follower.picturePath} alt=""/>
+                      </div>
+                      <h1
+                        className="text-xl font-fredoka cursor-pointer"
+                        onClick={() => {
+                          setPerson(follower._id);
+                          Navigate(`/users/${follower._id}`);
+                          toggleFollowers()
+                        }}
+                      >
+                        {follower.name}
+                      </h1>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
+
+
         {/* <h1 className="font-fredoka text-zinc-300 font-semibold text-2xl ml-7 my-3">Posts by {searchUser.username} :</h1> */}
         {/* Posts From User */}
         <div className="w-full bg--800 h-[59vh] flex flex-wrap gap-x-[2vw] gap-y-[3vh] px-[2vw] pt-[4vh] overflow-y-scroll overflow-x-hidden pb-[2.5vh] z-50">

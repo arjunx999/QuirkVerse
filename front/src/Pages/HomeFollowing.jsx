@@ -26,7 +26,7 @@ const HomeFollowing = () => {
       alert("User Not Logged In. Please Login to Continue");
       Navigate("/login");
     }
-    const fetchSavedPosts = async () => {
+    const fetchFollowedPosts = async () => {
       try {
         const url = `http://localhost:9999/posts/users/${user._id}/following-posts`;
         const response = await fetch(url, {
@@ -36,13 +36,13 @@ const HomeFollowing = () => {
           },
         });
         const result = await response.json();
-        // console.log(result)
         setPosts(result);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
-    fetchSavedPosts();
+    
+    fetchFollowedPosts();
   }, [user, Navigate]);
 
   const handleLogOut = () => {

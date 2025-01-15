@@ -228,3 +228,12 @@
     transform: scale(1);
   }
 }
+
+.glass-navbar5 {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 30px; 
+  border: 0.2px solid rgba(255, 255, 255, 0.1); 
+  box-shadow: 0 0.5px 20px rgba(129, 92, 250, 0.225);
+  color: #ffffff;
+}
